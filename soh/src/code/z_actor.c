@@ -2260,6 +2260,7 @@ s32 D_8015BC14;
 f32 D_8015BC18;
 
 void func_8002FA60(PlayState* play) {
+    lusprintf(__FILE__, __LINE__, 2, "Scene load fwset %d", gSaveContext.fw.set);
     Vec3f lightPos;
 
     if (gSaveContext.fw.set) {
@@ -2306,19 +2307,26 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
         s32 temp = params - 40;
 
         if (temp < 0) {
+            if (temp < -40) {
+                lusprintf(__FILE__, __LINE__, 2, "FW dispel timer %d", temp);
+            } else {
+                lusprintf(__FILE__, __LINE__, 2, "FW warp begin timer %d", temp);
+            }
             gSaveContext.respawn[RESPAWN_MODE_TOP].data = ++params;
             ratio = ABS(params) * 0.025f;
             D_8015BC14 = 60;
             D_8015BC18 = 1.0f;
         } else if (D_8015BC14) {
-            D_8015BC14--;
+            lusprintf(__FILE__, __LINE__, 2, "FW place light animation timer %d", D_8015BC14);
+            D_8015BC14-= 5;
         } else if (D_8015BC18 > 0.0f) {
+            lusprintf(__FILE__, __LINE__, 2, "FW place animation move to entrance %d", D_8015BC18);
             static Vec3f effectVel = { 0.0f, -0.05f, 0.0f };
             static Vec3f effectAccel = { 0.0f, -0.025f, 0.0f };
             static Color_RGBA8 effectPrimCol = { 255, 255, 255, 0 };
             static Color_RGBA8 effectEnvCol = { 100, 200, 0, 0 };
             Vec3f* curPos = &gSaveContext.respawn[RESPAWN_MODE_TOP].pos;
-            Vec3f* nextPos = &gSaveContext.respawn[RESPAWN_MODE_DOWN].pos;
+            Vec3f* nextPos = &gSaveContext.respawn[RESPAWN_MODE_TOP].pos;
             f32 prevNum = D_8015BC18;
             Vec3f dist;
             f32 diff = Math_Vec3f_DistXYZAndStoreDiff(nextPos, curPos, &dist);
@@ -2354,13 +2362,16 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
                                             &effectEnvCol, 1000, 16);
 
             if (D_8015BC18 == 0.0f) {
-                gSaveContext.respawn[RESPAWN_MODE_TOP] = gSaveContext.respawn[RESPAWN_MODE_DOWN];
+                gSaveContext.respawn[RESPAWN_MODE_TOP] = gSaveContext.respawn[RESPAWN_MODE_TOP];
                 gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams = 0x06FF;
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 40;
+                func_80839FFC(GET_PLAYER(play), play);
+                func_8005B1A4(Play_GetCamera(play, 0));
             }
 
             gSaveContext.respawn[RESPAWN_MODE_TOP].pos = *curPos;
         } else if (temp > 0) {
+            lusprintf(__FILE__, __LINE__, 2, "FW Warp animation timer %d", temp);
             Vec3f* curPos = &gSaveContext.respawn[RESPAWN_MODE_TOP].pos;
             f32 nextRatio = 1.0f - temp * 0.1f;
             f32 curRatio = 1.0f - (f32)(temp - 1) * 0.1f;
@@ -2368,29 +2379,30 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
             Vec3f dist;
             f32 diff;
 
-            if (nextRatio > 0.0f) {
-                eye.x = play->view.eye.x;
-                eye.y = play->view.eye.y - yOffset;
-                eye.z = play->view.eye.z;
-                diff = Math_Vec3f_DistXYZAndStoreDiff(&eye, curPos, &dist);
-                diff = (diff * (nextRatio / curRatio)) / diff;
-                curPos->x = eye.x + (dist.x * diff);
-                curPos->y = eye.y + (dist.y * diff);
-                curPos->z = eye.z + (dist.z * diff);
-                gSaveContext.respawn[RESPAWN_MODE_TOP].pos = *curPos;
-            }
+            // if (nextRatio > 0.0f) {
+            //     eye.x = play->view.eye.x;
+            //     eye.y = play->view.eye.y - yOffset;
+            //     eye.z = play->view.eye.z;
+            //     diff = Math_Vec3f_DistXYZAndStoreDiff(&eye, curPos, &dist);
+            //     diff = (diff * (nextRatio / curRatio)) / diff;
+            //     curPos->x = eye.x + (dist.x * diff);
+            //     curPos->y = eye.y + (dist.y * diff);
+            //     curPos->z = eye.z + (dist.z * diff);
+            //     gSaveContext.respawn[RESPAWN_MODE_TOP].pos = *curPos;
+            // }
 
             alpha = 255 - (temp * 30);
 
             if (alpha < 0) {
-                gSaveContext.fw.set = 0;
-                gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
-                alpha = 0;
+                lusprintf(__FILE__, __LINE__, 2, "FW Warp animation finish");
+                gSaveContext.fw.set = 1;
+                gSaveContext.respawn[RESPAWN_MODE_TOP].data = 40;
+                alpha = 255;
             } else {
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = ++params;
             }
 
-            ratio = 1.0f + ((f32)temp * 0.2); // required to match
+            // ratio = 1.0f + ((f32)temp * 0.2); // required to match
         }
 
         lightRadius = 500.0f * ratio;

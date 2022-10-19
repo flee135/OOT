@@ -2992,9 +2992,11 @@ void func_80835F44(PlayState* play, Player* this, s32 item) {
 
             temp = Player_ActionToMagicSpell(this, actionParam);
             if (temp >= 0) {
+                lusprintf(__FILE__, __LINE__, 2, "FW use outer");
                 if (((actionParam == PLAYER_IA_FARORES_WIND) && (gSaveContext.respawn[RESPAWN_MODE_TOP].data > 0)) ||
                     ((gSaveContext.magicCapacity != 0) && (gSaveContext.magicState == 0) &&
                      (gSaveContext.magic >= sMagicSpellCosts[temp]))) {
+                    lusprintf(__FILE__, __LINE__, 2, "FW use inner");
                     this->itemAction = actionParam;
                     this->unk_6AD = 4;
                 } else {
@@ -4969,12 +4971,12 @@ void func_8083AF44(PlayState* play, Player* this, s32 magicSpell) {
     this->unk_84F = magicSpell - 3;
     func_80087708(play, sMagicSpellCosts[magicSpell], 4);
 
-    LinkAnimation_PlayOnceSetSpeed(play, &this->skelAnime, &gPlayerAnim_link_magic_tame, 0.83f);
+    LinkAnimation_PlayOnceSetSpeed(play, &this->skelAnime, &gPlayerAnim_link_magic_tame, 0.83f * 5);
 
     if (magicSpell == 5) {
         this->subCamId = OnePointCutscene_Init(play, 1100, -101, NULL, MAIN_CAM);
     } else {
-        func_80835EA4(play, 10);
+        // func_80835EA4(play, 10);
     }
 }
 
@@ -5013,8 +5015,10 @@ s32 func_8083B040(Player* this, PlayState* play) {
                 sp2C = Player_ActionToMagicSpell(this, this->itemAction);
                 if (sp2C >= 0) {
                     if ((sp2C != 3) || (gSaveContext.respawn[RESPAWN_MODE_TOP].data <= 0)) {
+                        lusprintf(__FILE__, __LINE__, 2, "FW Place TEMP A");
                         func_8083AF44(play, this, sp2C);
                     } else {
+                        lusprintf(__FILE__, __LINE__, 2, "FW Place TEMP B");
                         func_80835C58(play, this, func_8085063C, 1);
                         this->stateFlags1 |= PLAYER_STATE1_28 | PLAYER_STATE1_29;
                         func_80832264(play, this, func_80833338(this));
@@ -13723,6 +13727,7 @@ void func_8085063C(Player* this, PlayState* play) {
         s32 respawnData = gSaveContext.respawn[RESPAWN_MODE_TOP].data;
 
         if (play->msgCtx.choiceIndex == 0) {
+            lusprintf(__FILE__, __LINE__, 2, "FW text prompt choose warp");
             gSaveContext.respawnFlag = 3;
             play->sceneLoadFlag = 0x14;
             play->nextEntranceIndex = gSaveContext.respawn[RESPAWN_MODE_TOP].entranceIndex;
@@ -13732,6 +13737,7 @@ void func_8085063C(Player* this, PlayState* play) {
         }
 
         if (play->msgCtx.choiceIndex == 1) {
+            lusprintf(__FILE__, __LINE__, 2, "FW text prompt choose dispel");
             gSaveContext.respawn[RESPAWN_MODE_TOP].data = -respawnData;
             gSaveContext.fw.set = 0;
             func_80078914(&gSaveContext.respawn[RESPAWN_MODE_TOP].pos, NA_SE_PL_MAGIC_WIND_VANISH);
@@ -13744,15 +13750,21 @@ void func_8085063C(Player* this, PlayState* play) {
 
 void func_8085076C(Player* this, PlayState* play) {
     s32 respawnData = gSaveContext.respawn[RESPAWN_MODE_TOP].data;
+    lusprintf(__FILE__, __LINE__, 2, "FW Warp link invisible + in the air %d", this->unk_850);
+    if (this->unk_850 == 0) {
+        this->unk_850 = 20;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].data = respawnData + 20;
+    }
 
     if (this->unk_850 > 20) {
         this->actor.draw = Player_Draw;
-        this->actor.world.pos.y += 60.0f;
+        // this->actor.world.pos.y += 60.0f;
         func_80837B9C(this, play);
         return;
     }
 
     if (this->unk_850++ == 20) {
+        lusprintf(__FILE__, __LINE__, 2, "FW link visible");
         gSaveContext.respawn[RESPAWN_MODE_TOP].data = respawnData + 1;
         func_80078914(&gSaveContext.respawn[RESPAWN_MODE_TOP].pos, NA_SE_PL_MAGIC_WIND_WARP);
     }
@@ -13803,23 +13815,29 @@ void func_808507F4(Player* this, PlayState* play) {
     if (LinkAnimation_Update(play, &this->skelAnime)) {
         if (this->unk_84F < 0) {
             if ((this->itemAction == PLAYER_IA_NAYRUS_LOVE) || (gSaveContext.magicState == 0)) {
+                lusprintf(__FILE__, __LINE__, 2, "FW Temp B");
                 func_80839FFC(this, play);
                 func_8005B1A4(Play_GetCamera(play, 0));
             }
         } else {
             if (this->unk_850 == 0) {
-                LinkAnimation_PlayOnceSetSpeed(play, &this->skelAnime, D_80854A58[this->unk_84F], 0.83f);
+                lusprintf(__FILE__, __LINE__, 2, "FW Temp C");
+                LinkAnimation_PlayOnceSetSpeed(play, &this->skelAnime, D_80854A58[this->unk_84F], 0.83f * 5);
 
                 if (func_80846A00(play, this, this->unk_84F) != NULL) {
+                    lusprintf(__FILE__, __LINE__, 2, "FW place A outer");
                     this->stateFlags1 |= PLAYER_STATE1_28 | PLAYER_STATE1_29;
                     if ((this->unk_84F != 0) || (gSaveContext.respawn[RESPAWN_MODE_TOP].data <= 0)) {
+                        lusprintf(__FILE__, __LINE__, 2, "FW place A inner");
                         gSaveContext.magicState = 1;
                     }
                 } else {
+                    lusprintf(__FILE__, __LINE__, 2, "FW Temp D");
                     func_800876C8(play);
                 }
             } else {
-                LinkAnimation_PlayLoopSetSpeed(play, &this->skelAnime, D_80854A64[this->unk_84F], 0.83f);
+                lusprintf(__FILE__, __LINE__, 2, "FW Temp E");
+                LinkAnimation_PlayLoopSetSpeed(play, &this->skelAnime, D_80854A64[this->unk_84F], 0.83f * 5);
 
                 if (this->unk_84F == 0) {
                     this->unk_850 = -10;
@@ -13832,14 +13850,16 @@ void func_808507F4(Player* this, PlayState* play) {
         if (this->unk_850 < 0) {
             this->unk_850++;
 
+            lusprintf(__FILE__, __LINE__, 2, "FW place B outer %d", this->unk_850);
             if (this->unk_850 == 0) {
+                lusprintf(__FILE__, __LINE__, 2, "FW place B inner %d", this->unk_850);
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 1;
                 Play_SetupRespawnPoint(play, RESPAWN_MODE_TOP, 0x6FF);
                 gSaveContext.fw.set = 1;
-                gSaveContext.fw.pos.x = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.x;
-                gSaveContext.fw.pos.y = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.y;
-                gSaveContext.fw.pos.z = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.z;
-                gSaveContext.fw.yaw = gSaveContext.respawn[RESPAWN_MODE_DOWN].yaw;
+                gSaveContext.fw.pos.x = gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x;
+                gSaveContext.fw.pos.y = gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y;
+                gSaveContext.fw.pos.z = gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z;
+                gSaveContext.fw.yaw = gSaveContext.respawn[RESPAWN_MODE_TOP].yaw;
                 gSaveContext.fw.playerParams = 0x6FF;
                 gSaveContext.fw.entranceIndex = gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex;
                 gSaveContext.fw.roomIndex = gSaveContext.respawn[RESPAWN_MODE_DOWN].roomIndex;
@@ -13849,14 +13869,18 @@ void func_808507F4(Player* this, PlayState* play) {
             }
         } else if (this->unk_84F >= 0) {
             if (this->unk_850 == 0) {
+                lusprintf(__FILE__, __LINE__, 2, "FW Temp F");
                 func_80832924(this, D_80854A80);
             } else if (this->unk_850 == 1) {
+                lusprintf(__FILE__, __LINE__, 2, "FW Temp G");
                 func_80832924(this, D_80854A8C[this->unk_84F]);
                 if ((this->unk_84F == 2) && LinkAnimation_OnFrame(&this->skelAnime, 30.0f)) {
+                lusprintf(__FILE__, __LINE__, 2, "FW Temp H");
                     this->stateFlags1 &= ~(PLAYER_STATE1_28 | PLAYER_STATE1_29);
                 }
             } else if (D_80854A7C[this->unk_84F] < this->unk_850++) {
-                LinkAnimation_PlayOnceSetSpeed(play, &this->skelAnime, D_80854A70[this->unk_84F], 0.83f);
+                lusprintf(__FILE__, __LINE__, 2, "FW Temp I");
+                LinkAnimation_PlayOnceSetSpeed(play, &this->skelAnime, D_80854A70[this->unk_84F], 0.83f * 5);
                 this->currentYaw = this->actor.shape.rot.y;
                 this->unk_84F = -1;
             }

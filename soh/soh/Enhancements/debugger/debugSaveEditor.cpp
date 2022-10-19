@@ -1516,6 +1516,45 @@ void DrawPlayerTab() {
         UIWidgets::InsertHelpHoverText("This will change Link's age when you load a map");
 
         ImGui::Separator();
+
+        ImGui::Text("Farore's Wind");
+        DrawGroupWithBorder([&]() {
+            ImGui::Text("gSaveContext.fw");
+            ImGui::InputScalar("X", ImGuiDataType_S32, &gSaveContext.fw.pos.x);
+            ImGui::SameLine();
+            ImGui::InputScalar("Y", ImGuiDataType_S32, &gSaveContext.fw.pos.y);
+            ImGui::SameLine();
+            ImGui::InputScalar("Z", ImGuiDataType_S32, &gSaveContext.fw.pos.z);
+            ImGui::SameLine();
+            ImGui::InputScalar("Yaw", ImGuiDataType_S32, &gSaveContext.fw.yaw);
+            ImGui::InputScalar("set", ImGuiDataType_S32, &gSaveContext.fw.set);
+            ImGui::SameLine();
+            ImGui::InputScalar("playerParams", ImGuiDataType_S32, &gSaveContext.fw.playerParams);
+            ImGui::SameLine();
+            ImGui::InputScalar("entranceIndex", ImGuiDataType_S32, &gSaveContext.fw.entranceIndex);
+            ImGui::SameLine();
+            ImGui::InputScalar("roomIndex", ImGuiDataType_S32, &gSaveContext.fw.roomIndex);
+        });
+
+        DrawGroupWithBorder([&]() {
+            ImGui::Text("RESPAWN_MODE_TOP");
+            ImGui::InputScalar("X", ImGuiDataType_Float, &gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x);
+            ImGui::SameLine();
+            ImGui::InputScalar("Y", ImGuiDataType_Float, &gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y);
+            ImGui::SameLine();
+            ImGui::InputScalar("Z", ImGuiDataType_Float, &gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z);
+            ImGui::SameLine();
+            ImGui::InputScalar("Yaw", ImGuiDataType_S16, &gSaveContext.respawn[RESPAWN_MODE_TOP].yaw);
+            ImGui::InputScalar("data", ImGuiDataType_S8, &gSaveContext.respawn[RESPAWN_MODE_TOP].data);
+            ImGui::SameLine();
+            ImGui::InputScalar("playerParams", ImGuiDataType_S16, &gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams);
+            ImGui::SameLine();
+            ImGui::InputScalar("entranceIndex", ImGuiDataType_S16, &gSaveContext.respawn[RESPAWN_MODE_TOP].entranceIndex);
+            ImGui::SameLine();
+            ImGui::InputScalar("roomIndex", ImGuiDataType_U8, &gSaveContext.respawn[RESPAWN_MODE_TOP].roomIndex);
+        });
+
+        ImGui::Separator();
         
         ImGui::Text("Link's Current Equipment");
         ImGui::PushItemWidth(ImGui::GetFontSize() * 15);

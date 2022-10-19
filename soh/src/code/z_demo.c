@@ -616,6 +616,7 @@ void Cutscene_Command_Terminator(PlayState* play, CutsceneContext* csCtx, CsCmdB
                 play->fadeTransition = 11;
                 break;
             case 8:
+                lusprintf(__FILE__, __LINE__, 2, "Cutscene_Command_Terminator");
                 gSaveContext.fw.set = 0;
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
                 if (!(gSaveContext.eventChkInf[4] & 0x20)) {
