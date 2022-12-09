@@ -8,6 +8,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/fmt.h>
 #include <regex>
+#include <string.h>
 
 extern "C" {
 #include <z64.h>
@@ -137,6 +138,8 @@ void CrowdControl::ListenToServer() {
 
             Effect* incomingEffect = ParseMessage(received);
             if (!incomingEffect) {
+                std::string cmd = received;
+                SohImGui::GetConsole()->Dispatch(cmd.substr(0, len));
                 continue;
             }
 

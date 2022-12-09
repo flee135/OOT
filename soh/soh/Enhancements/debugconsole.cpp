@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include "soh/OTRGlobals.h"
+#include "soh/Enhancements/cosmetics/CosmeticsEditor.h"
 #include <soh/Enhancements/item-tables/ItemTableManager.h>
 
 
@@ -956,6 +957,7 @@ static bool SetCVarHandler(std::shared_ptr<Ship::Console> Console, const std::ve
         clr.b = val >> 8;
         clr.a = val & 0xFF;
         CVar_SetRGBA((char*)args[1].c_str(), clr);
+        ApplyOrResetCustomGfxPatches();
     }
     else
         CVar_SetS32(args[1].c_str(), std::stoi(args[2]));

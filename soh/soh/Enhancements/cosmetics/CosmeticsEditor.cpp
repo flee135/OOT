@@ -421,7 +421,7 @@ void CosmeticsUpdateTick(bool& open) {
     4. GFX Command Index: Index of the GFX command you want to replace, the instructions on finding this are in the giant comment block above the cosmeticOptions map
     5. GFX Command: The GFX command you want to insert
 */
-void ApplyOrResetCustomGfxPatches(bool manualChange = true) {
+void ApplyOrResetCustomGfxPatches(bool manualChange) {
     static CosmeticOption& linkGoronTunic = cosmeticOptions.at("Link_GoronTunic");
     if (manualChange || CVar_GetS32(linkGoronTunic.rainbowCvar, 0)) {
         static Color_RGBA8 defaultColor = {linkGoronTunic.defaultColor.x, linkGoronTunic.defaultColor.y, linkGoronTunic.defaultColor.z, linkGoronTunic.defaultColor.w};

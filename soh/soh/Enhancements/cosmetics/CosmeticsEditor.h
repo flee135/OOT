@@ -23,5 +23,6 @@ static float TablesCellsWidth = 300.0f;
 static ImGuiTableColumnFlags FlagsTable = ImGuiTableFlags_BordersH | ImGuiTableFlags_BordersV;
 static ImGuiTableColumnFlags FlagsCell = ImGuiTableColumnFlags_WidthStretch | ImGuiTableColumnFlags_IndentEnable | ImGuiTableColumnFlags_NoSort;
 
+void ApplyOrResetCustomGfxPatches(bool manualChange = true);
 void InitCosmeticsEditor();//Init the menu itself
 ImVec4 GetRandomValue(int MaximumPossible);
