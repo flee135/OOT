@@ -16,6 +16,7 @@ def BuildOTR(xmlPath, rom, zapd_exe=None):
 
     exec_cmd = [zapd_exe, "ed", "-i", xmlPath, "-b", rom, "-fl", "CFG/filelists",
             "-o", "placeholder", "-osf", "placeholder", "-gsf", "1",
+            # "-Weverything", "-v", "2", 
             "-rconf", "CFG/Config.xml", "-se", "OTR", "--otrfile", 
             "oot-mq.otr" if Z64Rom.isMqRom(rom) else "oot.otr"]
 

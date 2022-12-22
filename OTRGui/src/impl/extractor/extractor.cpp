@@ -31,6 +31,7 @@ std::string GetXMLVersion(RomVersion version)
 	case OOT_PAL_GC_DBG1: return "GC_NMQ_D";
 	case OOT_PAL_GC_MQ_DBG: return "GC_MQ_D";
 	case OOT_PAL_GC:	  return "GC_NMQ_PAL_F";
+	case OOT_PAL_10:	  return "NMQ_PAL_F";
 	}
 
 	return "ERROR";

@@ -327,7 +327,7 @@ int main(int argc, char* argv[])
 				std::vector<std::string> fileList =
 					Directory::ListFiles(Globals::Instance->inputPath.string());
 
-				const int num_threads = std::thread::hardware_concurrency();
+				const int num_threads = std::thread::hardware_concurrency(); // 1
 				ctpl::thread_pool pool(num_threads > 1 ? num_threads / 2 : 1);
 
 				bool parseSuccessful;

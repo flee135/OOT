@@ -39,6 +39,8 @@ if [ ! -e "$DATA_SHARE"/oot.otr ] || [ ! -e "$DATA_SHARE"/oot-mq.otr ]; then
 					ROM_TYPE=0;;
 				0227d7c0074f2d0ac935631990da8ec5914597b4)
 					ROM_TYPE=0;;
+				328a1f1beba30ce5e178f031662019eb32c5f3b5)
+					ROM_TYPE=0;;
 				50bebedad9e0f10746a52b07239e47fa6c284d03)
 					ROM_TYPE=1;;
 				079b855b943d6ad8bd1eb026c0ed169ecbdac7da)
@@ -115,6 +117,9 @@ if [ ! -e "$DATA_SHARE"/oot.otr ] || [ ! -e "$DATA_SHARE"/oot-mq.otr ]; then
 				OTRNAME="oot.otr";;
 			0227d7c0074f2d0ac935631990da8ec5914597b4)
 				ROM=GC_NMQ_PAL_F
+				OTRNAME="oot.otr";;
+			328a1f1beba30ce5e178f031662019eb32c5f3b5)
+				ROM=NMQ_PAL_F
 				OTRNAME="oot.otr";;
 			50bebedad9e0f10746a52b07239e47fa6c284d03)
 				ROM=GC_MQ_D

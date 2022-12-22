@@ -24,6 +24,10 @@ sha1: cee6bc3c2a634b41728f2af8da54d9bf8cc14099
 ```
 sha1: 0227d7c0074f2d0ac935631990da8ec5914597b4
 ```
+#### Ocarina of Time PAL 1.0
+```
+sha1: 328a1f1beba30ce5e178f031662019eb32c5f3b5
+```
 #### Ocarina of Time Debug PAL GC MQ (Dungeons will be Master Quest)
 ```
 Build team: `zelda@srd022j`
