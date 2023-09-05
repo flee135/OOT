@@ -771,13 +771,13 @@ s32 EnTorch2_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f
                               Gfx** gfx) {
     Player* this = (Player*)thisx;
 
-    return func_8008FCC8(play, limbIndex, dList, pos, rot, &this->actor);
+    return Player_OverrideLimbDrawGameplayCommon(play, limbIndex, dList, pos, rot, &this->actor);
 }
 
 void EnTorch2_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     Player* this = (Player*)thisx;
 
-    func_80090D20(play, limbIndex, dList, rot, &this->actor);
+    Player_PostLimbDrawGameplay(play, limbIndex, dList, rot, &this->actor);
 }
 
 void EnTorch2_Draw(Actor* thisx, PlayState* play2) {
