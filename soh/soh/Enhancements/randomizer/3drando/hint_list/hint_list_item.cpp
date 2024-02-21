@@ -1363,6 +1363,18 @@ void HintTable_Init_Item() {
                         //clear text
                         Text{"a Ganon's Castle Small Key", /*french*/"une petite clé du Château de Ganon", /*spanish*/"una llave pequeña del Castillo de Ganon"}
      );
+     hintTable[RHT_OVERWORLD_KEY] = HintText::Item({
+                        //obscure text
+                        Text{"a tool for unlocking", /*french*/"un anti-porte",            /*spanish*/"una clave de una entrada"},
+                        Text{"a lock remover",       /*french*/"un efface-serrure",        /*spanish*/"un destructor de cerraduras"},
+                        Text{"a lockpick",           /*french*/"un crochet à porte",       /*spanish*/"una apertura portentosa"},
+                      }, {
+                        //ambiguous text
+                        Text{"a key", /*french*/"une clé", /*spanish*/"una llave"},
+                      },
+                        //clear text
+                        Text{"an Overworld Key", /*french*/"une clé de l'Overworld", /*spanish*/"una llave del Mundo Exterior"}
+     );
      hintTable[RHT_FOREST_TEMPLE_KEY_RING] = HintText::Item({
                         //obscure text
                         Text{"a sylvan toolbox for unlocking", /*french*/"des anti-portes sylvestres",            /*spanish*/"un conjunto silvestre de cerrajero"},

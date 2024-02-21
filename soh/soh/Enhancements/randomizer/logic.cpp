@@ -651,6 +651,29 @@ namespace Rando {
         GerudoTrainingGroundsKeys = 0;
         BottomOfTheWellKeys       = 0;
         TreasureGameKeys          = 0;
+        GaurdHouseKey                = false;
+        MarketBazaarKey              = false;
+        MarketPotionShopKey          = false;
+        MaskShopKey                  = false;
+        MarketShootingGalleryKey     = false;
+        BombchuBowlingKey            = false;
+        TreasureChestGameBuildingKey = false;
+        BombchuShopKey               = false;
+        RichardsHouseKey             = false;
+        KakBazaarKey                 = false;
+        KakPotionShopKey             = false;
+        BossHouseKey                 = false;
+        GrannysPotionShopKey         = false;
+        SkulltulaHouseKey            = false;
+        ImpasHouseKey                = false;
+        WindmillKey                  = false;
+        KakShootingGalleryKey        = false;
+        DampesHutKey                 = false;
+        TalonsHouseKey               = false;
+        StablesKey                   = false;
+        BackTowerKey                 = false;
+        HyliaLabKey                  = false;
+        FishingHoleKey               = false;
 
         //Boss Keys
         BossKeyForestTemple = 0;

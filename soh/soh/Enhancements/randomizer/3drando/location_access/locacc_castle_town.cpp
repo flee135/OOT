@@ -8,7 +8,7 @@ void AreaTable_Init_CastleTown() {
                   //Exits
                   Entrance(RR_HYRULE_FIELD,       {[]{return logic->IsAdult || logic->AtDay;}}),
                   Entrance(RR_THE_MARKET,         {[]{return true;}}),
-                  Entrance(RR_MARKET_GUARD_HOUSE, {[]{return true;}}),
+                  Entrance(RR_MARKET_GUARD_HOUSE, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->GaurdHouseKey);}}),
   });
 
   areaTable[RR_THE_MARKET] = Area("Market", "Market", RA_THE_MARKET, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -16,20 +16,20 @@ void AreaTable_Init_CastleTown() {
                   Entrance(RR_MARKET_ENTRANCE,            {[]{return true;}}),
                   Entrance(RR_TOT_ENTRANCE,               {[]{return true;}}),
                   Entrance(RR_CASTLE_GROUNDS,             {[]{return true;}}),
-                  Entrance(RR_MARKET_BAZAAR,              {[]{return logic->IsChild && logic->AtDay;}}),
-                  Entrance(RR_MARKET_MASK_SHOP,           {[]{return logic->IsChild && logic->AtDay;}}),
-                  Entrance(RR_MARKET_SHOOTING_GALLERY,    {[]{return logic->IsChild && logic->AtDay;}}),
-                  Entrance(RR_MARKET_BOMBCHU_BOWLING,     {[]{return logic->IsChild;}}),
-                  Entrance(RR_MARKET_TREASURE_CHEST_GAME, {[]{return logic->IsChild && logic->AtNight;}}),
-                  Entrance(RR_MARKET_POTION_SHOP,         {[]{return logic->IsChild && logic->AtDay;}}),
+                  Entrance(RR_MARKET_BAZAAR,              {[]{return logic->IsChild && logic->AtDay && ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->MarketBazaarKey);}}),
+                  Entrance(RR_MARKET_MASK_SHOP,           {[]{return logic->IsChild && logic->AtDay && ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->MaskShopKey);}}),
+                  Entrance(RR_MARKET_SHOOTING_GALLERY,    {[]{return logic->IsChild && logic->AtDay && ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->MarketShootingGalleryKey);}}),
+                  Entrance(RR_MARKET_BOMBCHU_BOWLING,     {[]{return logic->IsChild && ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->BombchuBowlingKey);}}),
+                  Entrance(RR_MARKET_TREASURE_CHEST_GAME, {[]{return logic->IsChild && logic->AtNight && ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->TreasureChestGameBuildingKey);}}),
+                  Entrance(RR_MARKET_POTION_SHOP,         {[]{return logic->IsChild && logic->AtDay && ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->MarketPotionShopKey);}}),
                   Entrance(RR_MARKET_BACK_ALLEY,          {[]{return logic->IsChild;}}),
   });
 
   areaTable[RR_MARKET_BACK_ALLEY] = Area("Market Back Alley", "Market", RA_THE_MARKET, NO_DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(RR_THE_MARKET,                 {[]{return true;}}),
-                  Entrance(RR_MARKET_BOMBCHU_SHOP,        {[]{return logic->AtNight;}}),
-                  Entrance(RR_MARKET_DOG_LADY_HOUSE,      {[]{return true;}}),
+                  Entrance(RR_MARKET_BOMBCHU_SHOP,        {[]{return logic->AtNight && ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->BombchuShopKey);}}),
+                  Entrance(RR_MARKET_DOG_LADY_HOUSE,      {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->RichardsHouseKey);}}),
                   Entrance(RR_MARKET_MAN_IN_GREEN_HOUSE,  {[]{return logic->AtNight;}}),
   });
 
@@ -170,7 +170,7 @@ void AreaTable_Init_CastleTown() {
                   LocationAccess(RC_MARKET_GS_GUARD_HOUSE, {[]{return logic->IsChild;}}),
                 }, {
                   //Exits
-                  Entrance(RR_MARKET_ENTRANCE, {[]{return true;}}),
+                  Entrance(RR_MARKET_ENTRANCE, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->GaurdHouseKey);}}),
   });
 
   areaTable[RR_MARKET_BAZAAR] = Area("Market Bazaar", "Market Bazaar", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -202,7 +202,7 @@ void AreaTable_Init_CastleTown() {
                   LocationAccess(RC_MARKET_SHOOTING_GALLERY_REWARD, {[]{return logic->IsChild && logic->ChildsWallet;}}),
                 }, {
                   //Exits
-                  Entrance(RR_THE_MARKET, {[]{return true;}}),
+                  Entrance(RR_THE_MARKET, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->MarketShootingGalleryKey);}}),
   });
 
   areaTable[RR_MARKET_BOMBCHU_BOWLING] = Area("Market Bombchu Bowling", "Market Bombchu Bowling", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -212,7 +212,7 @@ void AreaTable_Init_CastleTown() {
                   LocationAccess(RC_MARKET_BOMBCHU_BOWLING_BOMBCHUS,     {[]{return logic->CanPlayBowling;}}),
                 }, {
                   //Exits
-                  Entrance(RR_THE_MARKET, {[]{return true;}}),
+                  Entrance(RR_THE_MARKET, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->BombchuBowlingKey);}}),
   });
 
   areaTable[RR_MARKET_POTION_SHOP] = Area("Market Potion Shop", "Market Potion Shop", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -241,7 +241,7 @@ void AreaTable_Init_CastleTown() {
                   LocationAccess(RC_MARKET_TREASURE_CHEST_GAME_ITEM_5, {[]{return logic->ChildsWallet && ((randoCtx->GetOption(RSK_SHUFFLE_CHEST_MINIGAME).Is(RO_CHEST_GAME_SINGLE_KEYS) && logic->SmallKeys(RR_MARKET_TREASURE_CHEST_GAME, 5)) || (randoCtx->GetOption(RSK_SHUFFLE_CHEST_MINIGAME).Is(RO_CHEST_GAME_PACK) && logic->SmallKeys(RR_MARKET_TREASURE_CHEST_GAME, 1)) || (logic->CanUse(RG_LENS_OF_TRUTH) && !randoCtx->GetOption(RSK_SHUFFLE_CHEST_MINIGAME)));}}),
                 }, {
                   //Exits
-                  Entrance(RR_THE_MARKET, {[]{return true;}}),
+                  Entrance(RR_THE_MARKET, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->TreasureChestGameBuildingKey);}}),
   });
 
   areaTable[RR_MARKET_BOMBCHU_SHOP] = Area("Market Bombchu Shop", "Market Bombchu Shop", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -264,7 +264,7 @@ void AreaTable_Init_CastleTown() {
                   LocationAccess(RC_MARKET_LOST_DOG, {[]{return logic->IsChild && logic->AtNight;}}),
                 }, {
                   //Exits
-                  Entrance(RR_MARKET_BACK_ALLEY, {[]{return true;}}),
+                  Entrance(RR_MARKET_BACK_ALLEY, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->RichardsHouseKey);}}),
   });
 
   areaTable[RR_MARKET_MAN_IN_GREEN_HOUSE] = Area("Market Man in Green House", "Market Man in Green House", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {

@@ -209,6 +209,11 @@ typedef enum {
     // Opt: *EnOkarinaTag
     // Vanilla condition: !Flags_GetEventChkInf(EVENTCHKINF_OPENED_THE_DOOR_OF_TIME)
     GI_VB_BE_ELIGIBLE_TO_OPEN_DOT,
+    GI_VB_CONSUME_SMALL_KEY,
+    // Vanilla condition: gSaveContext.inventory.dungeonKeys[gSaveContext.mapIndex] <= 0
+    GI_VB_NOT_HAVE_SMALL_KEY,
+    // Vanilla condition: !Flags_GetSwitch(play, this->actor.params & 0x3F)
+    GI_VB_DOOR_BE_LOCKED,
 
     /*** Play Cutscenes ***/
 

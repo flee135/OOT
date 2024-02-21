@@ -135,7 +135,7 @@ void AreaTable_Init_HyruleField() {
                   Entrance(RR_ZORAS_DOMAIN,          {[]{return logic->IsChild && (logic->CanDive || logic->CanUse(RG_IRON_BOOTS));}}),
                   Entrance(RR_LH_OWL_FLIGHT,         {[]{return logic->IsChild;}}),
                   Entrance(RR_LH_FISHING_ISLAND,     {[]{return logic->IsChild || logic->CanUse(RG_SCARECROW) || CanPlantBean(RR_LAKE_HYLIA) || logic->WaterTempleClear;}}),
-                  Entrance(RR_LH_LAB,                {[]{return true;}}),
+                  Entrance(RR_LH_LAB,                {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->HyliaLabKey);}}),
                   Entrance(RR_WATER_TEMPLE_ENTRYWAY, {[]{return logic->CanUse(RG_HOOKSHOT) && ((logic->CanUse(RG_IRON_BOOTS) || (randoCtx->GetTrickOption(RT_LH_WATER_HOOKSHOT) && logic->ProgressiveScale >= 2)) || (logic->IsAdult && logic->CanUse(RG_LONGSHOT) && logic->ProgressiveScale >= 2));}}),
                   Entrance(RR_LH_GROTTO,             {[]{return true;}}),
   });
@@ -143,7 +143,7 @@ void AreaTable_Init_HyruleField() {
   areaTable[RR_LH_FISHING_ISLAND] = Area("LH Fishing Island", "Lake Hylia", RA_LAKE_HYLIA, DAY_NIGHT_CYCLE, {}, {}, {
                   //Exits
                   Entrance(RR_LAKE_HYLIA,      {[]{return true;}}),
-                  Entrance(RR_LH_FISHING_HOLE, {[]{return true;}}),
+                  Entrance(RR_LH_FISHING_HOLE, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->FishingHoleKey);}}),
   });
 
   areaTable[RR_LH_OWL_FLIGHT] = Area("LH Owl Flight", "Lake Hylia", RA_LAKE_HYLIA, NO_DAY_NIGHT_CYCLE, {}, {}, {
@@ -161,7 +161,7 @@ void AreaTable_Init_HyruleField() {
                   LocationAccess(RC_LH_GS_LAB_CRATE, {[]{return logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT);}}),
                 }, {
                   //Exits
-                  Entrance(RR_LAKE_HYLIA, {[]{return true;}}),
+                  Entrance(RR_LAKE_HYLIA, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->HyliaLabKey);}}),
   });
 
   // TODO: should some of these helpers be done via events instead?
@@ -205,7 +205,7 @@ void AreaTable_Init_HyruleField() {
                   LocationAccess(RC_FISHING_POLE_HINT,{[]{return true;}}),
                 }, {
                   //Exits
-                  Entrance(RR_LH_FISHING_ISLAND, {[]{return true;}}),
+                  Entrance(RR_LH_FISHING_ISLAND, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->FishingHoleKey);}}),
   });
 
   areaTable[RR_LH_GROTTO] = Area("LH Grotto", "LH Grotto", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -233,9 +233,9 @@ void AreaTable_Init_HyruleField() {
                 }, {
                   //Exits
                   Entrance(RR_HYRULE_FIELD,     {[]{return true;}}),
-                  Entrance(RR_LLR_TALONS_HOUSE, {[]{return true;}}),
-                  Entrance(RR_LLR_STABLES,      {[]{return true;}}),
-                  Entrance(RR_LLR_TOWER,        {[]{return true;}}),
+                  Entrance(RR_LLR_TALONS_HOUSE, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->TalonsHouseKey);}}),
+                  Entrance(RR_LLR_STABLES,      {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->StablesKey);}}),
+                  Entrance(RR_LLR_TOWER,        {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->BackTowerKey);}}),
                   Entrance(RR_LLR_GROTTO,       {[]{return logic->IsChild;}}),
   });
 
@@ -244,7 +244,7 @@ void AreaTable_Init_HyruleField() {
                   LocationAccess(RC_LLR_TALONS_CHICKENS, {[]{return logic->ChildsWallet && logic->IsChild && logic->AtDay && logic->ZeldasLetter;}}),
                 }, {
                   //Exits
-                  Entrance(RR_LON_LON_RANCH, {[]{return true;}}),
+                  Entrance(RR_LON_LON_RANCH, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->TalonsHouseKey);}}),
   });
 
   areaTable[RR_LLR_STABLES] = Area("LLR Stables", "LLR Stables", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -253,7 +253,7 @@ void AreaTable_Init_HyruleField() {
                   LocationAccess(RC_LLR_STABLES_RIGHT_COW, {[]{return logic->CanUse(RG_EPONAS_SONG);}}),
                 }, {
                   //Exits
-                  Entrance(RR_LON_LON_RANCH, {[]{return true;}}),
+                  Entrance(RR_LON_LON_RANCH, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->StablesKey);}}),
   });
 
   areaTable[RR_LLR_TOWER] = Area("LLR Tower", "LLR Tower", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {
@@ -263,7 +263,7 @@ void AreaTable_Init_HyruleField() {
                   LocationAccess(RC_LLR_TOWER_RIGHT_COW,  {[]{return logic->CanUse(RG_EPONAS_SONG);}}),
                 }, {
                   //Exits
-                  Entrance(RR_LON_LON_RANCH, {[]{return true;}}),
+                  Entrance(RR_LON_LON_RANCH, {[]{return ((!randoCtx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) || logic->BackTowerKey);}}),
   });
 
   areaTable[RR_LLR_GROTTO] = Area("LLR Grotto", "LLR Grotto", RA_NONE, NO_DAY_NIGHT_CYCLE, {}, {

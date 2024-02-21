@@ -165,6 +165,29 @@ class Logic {
     uint8_t GerudoTrainingGroundsKeys = 0;
     uint8_t BottomOfTheWellKeys = 0;
     uint8_t TreasureGameKeys = 0;
+    bool GaurdHouseKey = false;
+    bool MarketBazaarKey = false;
+    bool MarketPotionShopKey = false;
+    bool MaskShopKey = false;
+    bool MarketShootingGalleryKey = false;
+    bool BombchuBowlingKey = false;
+    bool TreasureChestGameBuildingKey = false;
+    bool BombchuShopKey = false;
+    bool RichardsHouseKey = false;
+    bool KakBazaarKey = false;
+    bool KakPotionShopKey = false;
+    bool BossHouseKey = false;
+    bool GrannysPotionShopKey = false;
+    bool SkulltulaHouseKey = false;
+    bool ImpasHouseKey = false;
+    bool WindmillKey = false;
+    bool KakShootingGalleryKey = false;
+    bool DampesHutKey = false;
+    bool TalonsHouseKey = false;
+    bool StablesKey = false;
+    bool BackTowerKey = false;
+    bool HyliaLabKey = false;
+    bool FishingHoleKey = false;
 
     // Triforce Pieces
     uint8_t TriforcePieces = 0;
