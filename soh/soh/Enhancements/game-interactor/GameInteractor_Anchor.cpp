@@ -328,6 +328,7 @@ void Anchor_PushSettingsToRemote() {
     payload["type"] = "PUSH_ANCHOR_SETTINGS";
     payload["broadcastItemsToAll"] = CVarGetInteger("gBroadcastItemsToAll", 0);
     payload["teleportRupeeCost"] = CVarGetInteger("gTeleportRupeeCost", 0);
+    payload["pvpDamageMul"] = CVarGetInteger("gPvpDamageMul", 0);
 
     GameInteractorAnchor::Instance->TransmitJsonToRemote(payload);
 }
@@ -346,6 +347,7 @@ void Anchor_CopySettingsFromRemote(nlohmann::json payload) {
 
     CVarSetInteger("gBroadcastItemsToAll", payload["broadcastItemsToAll"].get<int32_t>());
     CVarSetInteger("gTeleportRupeeCost", payload["teleportRupeeCost"].get<int32_t>());
+    CVarSetInteger("gPvpDamageMul", payload["pvpDamageMul"].get<int32_t>());
 
     settingsCopied = true;
     Anchor_DisplayMessage({ .message = "Settings copied from remote." });
@@ -405,6 +407,32 @@ void GameInteractorAnchor::TransmitJsonToRemote(nlohmann::json payload) {
 
 void Anchor_ParseSaveStateFromRemote(nlohmann::json payload);
 void Anchor_PushSaveStateToRemote();
+
+int GetPvpDamageMultiplier() {
+    int32_t damageOption = CVarGetInteger("gPvpDamageMul", PVP_DAMAGE_MUL_1X);
+    switch (damageOption) {
+        case PVP_DAMAGE_MUL_1X:
+            return 1;
+        case PVP_DAMAGE_MUL_2X:
+            return 2;
+        case PVP_DAMAGE_MUL_4X:
+            return 4;
+        case PVP_DAMAGE_MUL_8X:
+            return 8;
+        case PVP_DAMAGE_MUL_16X:
+            return 16;
+        case PVP_DAMAGE_MUL_32X:
+            return 32;
+        case PVP_DAMAGE_MUL_64X:
+            return 64;
+        case PVP_DAMAGE_MUL_128X:
+            return 128;
+        case PVP_DAMAGE_MUL_256X:
+            return 256;
+        default:
+            return 1;
+    }
+}
 
 void GameInteractorAnchor::HandleRemoteJson(nlohmann::json payload) {
     if (!payload.contains("type")) {
@@ -537,7 +565,7 @@ void GameInteractorAnchor::HandleRemoteJson(nlohmann::json payload) {
             !Player_InBlockingCsMode(gPlayState, GET_PLAYER(gPlayState))) {
             if (payload["damageEffect"] == PUPPET_DMGEFF_NORMAL) {
                 u8 damage = payload["damageValue"];
-                Player_InflictDamage(gPlayState, damage * -4);
+                Player_InflictDamage(gPlayState, damage * GetPvpDamageMultiplier() * -4);
                 func_80837C0C(gPlayState, GET_PLAYER(gPlayState), 0, 0, 0, 0, 0);
                 GET_PLAYER(gPlayState)->invincibilityTimer = 18;
                 GET_PLAYER(gPlayState)->actor.freezeTimer = 0;

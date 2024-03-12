@@ -62,6 +62,18 @@ typedef enum {
 } ZFightingFixType;
 
 typedef enum {
+    PVP_DAMAGE_MUL_1X,
+    PVP_DAMAGE_MUL_2X,
+    PVP_DAMAGE_MUL_4X,
+    PVP_DAMAGE_MUL_8X,
+    PVP_DAMAGE_MUL_16X,
+    PVP_DAMAGE_MUL_32X,
+    PVP_DAMAGE_MUL_64X,
+    PVP_DAMAGE_MUL_128X,
+    PVP_DAMAGE_MUL_256X,
+} PvpDamageMul;
+
+typedef enum {
     BONK_DAMAGE_NONE,
     BONK_DAMAGE_QUARTER_HEART,
     BONK_DAMAGE_HALF_HEART,
