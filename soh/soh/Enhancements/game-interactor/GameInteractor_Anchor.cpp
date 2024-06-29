@@ -1,4 +1,4 @@
-#ifdef ENABLE_REMOTE_CONTROL 
+#ifdef ENABLE_REMOTE_CONTROL
 
 #include "GameInteractor_Anchor.h"
 #include <libultraship/libultraship.h>
@@ -642,6 +642,7 @@ void GameInteractorAnchor::HandleRemoteJson(nlohmann::json payload) {
         effect->Apply();
     }
     if (payload["type"] == "DAMAGE_PLAYER") {
+        // TODO: add friendly fire toggle
         if (payload["damageEffect"] > 0 && GET_PLAYER(gPlayState)->invincibilityTimer <= 0 &&
             !Player_InBlockingCsMode(gPlayState, GET_PLAYER(gPlayState))) {
             // Save id of last person to hit, and also set vulnerability timer.
