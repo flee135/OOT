@@ -101,6 +101,7 @@ static const char* imguiScaleOptions[4] = { "Small", "Normal", "Large", "X-Large
         "OHKO"
     };
     static const char* timeTravelOptions[3] = { "Disabled", "Ocarina of Time", "Any Ocarina" };
+    static const char* teammateDamageOptions[3] = { "All Damage Disabled", "Normal Damage Disabled", "Damage Enabled" };
     static const char* locationDisplayOptions[3] = { "On", "Off", "Teammates Only" };
     static const char* teleportOptions[3] = { "On", "Off", "Teammates Only" };
     static const char* iceTrapTargets[4] = { "Team Only", "Self Only", "Enemies Only", "All" };
@@ -1688,6 +1689,10 @@ void DrawRemoteControlMenu() {
                 UIWidgets::EnhancementCheckbox("Broadcast items to all.", "gBroadcastItemsToAll");
                 UIWidgets::Tooltip("Alert everyone when an item is found, including players on opposing teams. If off, "
                                    "only teammates are alerted when they receive the item.");
+                
+                ImGui::Text("Teammate Damage");
+                UIWidgets::EnhancementCombobox("gTeammateDamage", teammateDamageOptions, 0);
+                UIWidgets::Tooltip("Modify whether teammates may damage each other. 'Normal Damage Disabled' means that teammates can still stun/freeze/burn each other.");
 
                 ImGui::Text("Display Player Location");
                 UIWidgets::EnhancementCombobox("gLocationDisplay", locationDisplayOptions, 0);

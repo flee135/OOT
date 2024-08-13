@@ -395,6 +395,7 @@ void TitleCard_InitPlaceName(PlayState* play, TitleCardContext* titleCtx, void* 
                              s32 width, s32 height, s32 delay);
 s32 func_8002D53C(PlayState* play, TitleCardContext* titleCtx);
 void Actor_Kill(Actor* actor);
+void Actor_Destroy(Actor* actor, PlayState* play);
 void Actor_SetFocus(Actor* actor, f32 offset);
 void Actor_SetScale(Actor* actor, f32 scale);
 void Actor_SetObjectDependency(PlayState* play, Actor* actor);
