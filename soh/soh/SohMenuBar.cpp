@@ -1711,9 +1711,7 @@ void DrawRemoteControlMenu() {
 
                     UIWidgets::EnhancementCheckbox("Invincibility on Death", "gPvpInvincibilityOnDeath", false, "",
                                                    UIWidgets::CheckboxGraphics::Cross, true);
-                    UIWidgets::Tooltip(
-                        "Upon death from another player, get invincibility for 15s when respawning. "
-                        "This makes it harder to spawn camp other players.");
+                    UIWidgets::Tooltip("Upon death from another player, get invincibility for 15s when respawning.");
 
                     UIWidgets::PaddedSeparator(true, true);
 

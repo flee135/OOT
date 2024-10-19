@@ -652,19 +652,21 @@ void GameInteractorAnchor::HandleRemoteJson(nlohmann::json payload) {
             // This helps send a buff to the last hitter if game over is triggered while vulnerable.
             lastAttackerClientId = payload["clientId"].get<uint32_t>();
             pvpVulnerableTimer = 100;
+            u8 damage = payload["damageValue"];
 
             if (payload["damageEffect"] == PUPPET_DMGEFF_NORMAL) {
-                u8 damage = payload["damageValue"];
                 Player_InflictDamage(gPlayState, damage * GetPvpDamageMultiplier() * -4);
                 func_80837C0C(gPlayState, GET_PLAYER(gPlayState), 0, 0, 0, 0, 0);
                 GET_PLAYER(gPlayState)->invincibilityTimer = 18;
                 GET_PLAYER(gPlayState)->actor.freezeTimer = 0;
             } else if (payload["damageEffect"] == PUPPET_DMGEFF_ICE) {
+                Player_InflictDamage(gPlayState, damage * GetPvpDamageMultiplier() * -4);
                 GET_PLAYER(gPlayState)->stateFlags1 &= ~(PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_ITEM_OVER_HEAD);
                 func_80837C0C(gPlayState, GET_PLAYER(gPlayState), 3, 0.0f, 0.0f, 0, 20);
                 GET_PLAYER(gPlayState)->invincibilityTimer = 18;
                 GET_PLAYER(gPlayState)->actor.freezeTimer = 0;
             } else if (payload["damageEffect"] == PUPPET_DMGEFF_FIRE) {
+                Player_InflictDamage(gPlayState, damage * GetPvpDamageMultiplier() * -4);
                 for (int i = 0; i < 18; i++) {
                     GET_PLAYER(gPlayState)->flameTimers[i] = Rand_S16Offset(0, 200);
                 }
@@ -673,10 +675,12 @@ void GameInteractorAnchor::HandleRemoteJson(nlohmann::json payload) {
                 GET_PLAYER(gPlayState)->invincibilityTimer = 18;
                 GET_PLAYER(gPlayState)->actor.freezeTimer = 0;
             } else if (payload["damageEffect"] == PUPPET_DMGEFF_THUNDER) {
+                Player_InflictDamage(gPlayState, damage * GetPvpDamageMultiplier() * -4);
                 func_80837C0C(gPlayState, GET_PLAYER(gPlayState), 4, 0.0f, 0.0f, 0, 20);
                 GET_PLAYER(gPlayState)->invincibilityTimer = 18;
                 GET_PLAYER(gPlayState)->actor.freezeTimer = 0;
             } else if (payload["damageEffect"] == PUPPET_DMGEFF_KNOCKBACK) {
+                Player_InflictDamage(gPlayState, damage * GetPvpDamageMultiplier() * -4);
                 func_8002F71C(gPlayState, &GET_PLAYER(gPlayState)->actor, 100.0f * 0.04f + 4.0f, GET_PLAYER(gPlayState)->actor.world.rot.y, 8.0f);
                 GET_PLAYER(gPlayState)->invincibilityTimer = 28;
                 GET_PLAYER(gPlayState)->actor.freezeTimer = 0;
