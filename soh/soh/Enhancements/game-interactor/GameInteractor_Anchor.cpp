@@ -361,6 +361,7 @@ void Anchor_PushSettingsToRemote() {
     payload["gTrapMenuTelehomeCost"] = CVarGetInteger("gTrapMenuTelehomeCost", 200);
 
     // PvP buffs.
+    payload["gPvpInvincibilityOnDeath"] = CVarGetInteger("gPvpInvincibilityOnDeath", 1);
     payload["gPvpBuffEnableRefillWallet"] = CVarGetInteger("gPvpBuffEnableRefillWallet", 1);
     payload["gPvpBuffEnableRefillConsumables"] = CVarGetInteger("gPvpBuffEnableRefillConsumables", 1);
     payload["gPvpBuffEnableSpeedBoost"] = CVarGetInteger("gPvpBuffEnableSpeedBoost", 1);
@@ -406,6 +407,8 @@ void Anchor_CopySettingsFromRemote(nlohmann::json payload) {
     }
 
     // PvP buffs.
+    CVarSetInteger("gPvpInvincibilityOnDeath", payload["gPvpInvincibilityOnDeath"].get<int32_t>());
+    CVarSetInteger("gPvpBuffEnableRefillWallet", payload["gPvpBuffEnableRefillWallet"].get<int32_t>());
     CVarSetInteger("gPvpBuffEnableRefillWallet", payload["gPvpBuffEnableRefillWallet"].get<int32_t>());
     CVarSetInteger("gPvpBuffEnableRefillConsumables", payload["gPvpBuffEnableRefillConsumables"].get<int32_t>());
     CVarSetInteger("gPvpBuffEnableSpeedBoost", payload["gPvpBuffEnableSpeedBoost"].get<int32_t>());
@@ -1438,6 +1441,11 @@ void Anchor_RegisterHooks() {
         if (pvpVulnerableTimer > 0) {
             AnchorClient lastAttackerClient = GameInteractorAnchor::AnchorClients[lastAttackerClientId];
             Anchor_DisplayMessage({ .message = "Died to", .suffix = lastAttackerClient.name });
+
+            if (CVarGetInteger("gPvpInvincibilityOnDeath", 1)) {
+                // Give 15s of invincibility.
+                invincibilityTimer = 15 * 20;
+            }
 
             // Send payload to last attacker letting them know they got a kill.
             nlohmann::json payload;

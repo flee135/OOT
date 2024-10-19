@@ -1708,6 +1708,16 @@ void DrawRemoteControlMenu() {
                         "PvP credits can be obtained when dealing the final blow to a player "
                         "on an opposing team. Enabling a buff will add it to the PvP menu as "
                         "an option to spend PvP credits on.");
+
+                    UIWidgets::EnhancementCheckbox("Invincibility on Death", "gPvpInvincibilityOnDeath", false, "",
+                                                   UIWidgets::CheckboxGraphics::Cross, true);
+                    UIWidgets::Tooltip(
+                        "Upon death from another player, get invincibility for 15s when respawning. "
+                        "This makes it harder to spawn camp other players.");
+
+                    UIWidgets::PaddedSeparator(true, true);
+
+                    ImGui::Text("Buffs");
                     UIWidgets::EnhancementCheckbox("Refill Wallet", "gPvpBuffEnableRefillWallet", false, "",
                                                    UIWidgets::CheckboxGraphics::Cross, true);
                     UIWidgets::EnhancementCheckbox("Refill Consumables", "gPvpBuffEnableRefillConsumables", false, "",
